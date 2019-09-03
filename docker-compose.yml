@@ -1,0 +1,27 @@
+---
+#Use this docker-compose file, after you have created the image from the running container (Powershell)
+#To create image -> docker commit <running container name> <image name>
+#Place a startup script in the location usr/local/bin/init.sh with the following contents
+#service apache2 start 
+#service cron start
+
+version: '3'
+services:
+ container_info:
+  container_name: vm_web
+  image: <Your custom image name>
+  ports:
+   - "5600:80"
+  volumes:
+   - /home/administrator/volume_vm_web:/Jana_Scripts
+  command: >
+   bash -c "sh usr/local/bin/init.sh &&
+            tail -f /dev/null"
+  restart: always
+  tty: true
+  networks:
+   - net
+networks:
+ net: 
+ 
+...
